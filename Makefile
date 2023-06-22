@@ -1,6 +1,6 @@
 NAME = philo
 LIB = philo.h
-C_SOURCES = philo.c
+C_SOURCES = philo.c philo_utils.c
 B_SOURCES = 
 CC = @cc
 CFLAGS = -Wall -Wextra -Werror -g
