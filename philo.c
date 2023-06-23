@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:43:00 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/23 12:36:41 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:09:14 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	create_threads(t_attr *data)
 		pthread_join(data->philos[i].tid, 0);
 	return (0);
 }
-
 
 void	assign_forks(t_attr *data)
 {
