@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 all:	$(NAME)
 $(NAME):	$(C_SOURCES)
-			@$(CC) $(CFLAGS) $(^) -o $(NAME) -fsanitize=address
+			@$(CC) $(CFLAGS) $(^) -o $(NAME) -fsanitize=address -fsanitize=thread
 
 bonus: $(B_SOURCES)
 			@$(CC) $(CFLAGS) $(^) -o $(NAME) -fsanitize=address

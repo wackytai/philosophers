@@ -6,13 +6,13 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/22 14:54:26 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:36:54 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_input(char **argv, int argc, t_philo *philos)
+int	check_input(char **argv, int argc, t_attr *data)
 {
 	int	i;
 	int	res;
@@ -23,18 +23,19 @@ int	check_input(char **argv, int argc, t_philo *philos)
 		res = ft_atoi(argv[i]);
 		if (res <= 0)
 			return (-1);
-		if (i == 1)
-			philos->n_philos = res;
-		if (i == 2)
-			philos->t_die;
-		if (i == 3)
-			philos->t_eat;
-		if (i == 4)
-			philos->t_sleep;
-		if (i == 5)
-			philos->n_meals;
+		else if (i == 1)
+			data->n = res;
+		else if (i == 2)
+			data->t_die = (time_t)res;
+		else if (i == 3)
+			data->t_eat = (time_t)res;
+		else if (i == 4)
+			data->t_sleep = (time_t)res;
+		else if (i == 5)
+			data->max_meal = res;
 	}
-	philos->n_forks = philos->n_philos;
+	if (argc == 5)
+		data->max_meal = 0;
 	return (0);
 }
 
@@ -59,4 +60,12 @@ int	ft_atoi(char *str)
 	if (res > INT_MAX || res < INT_MIN)
 		return (-1);
 	return (res);
+}
+
+time_t	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, 0);
+	return (time.tv_sec * 1000 + (time.tv_usec / 1000));
 }
