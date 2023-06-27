@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:31:18 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/23 12:37:00 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:07:35 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	routine_check(t_attr *data);
 int		check_input(char **argv, int argc, t_attr *data);
 int		ft_atoi(char *str);
 time_t	get_time(void);
+void	print_action(t_attr *data, int flag);
 
 #endif
