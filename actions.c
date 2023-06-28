@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/28 10:52:49 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:28:52 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,17 @@ void	assign_forks(t_attr *data)
 
 void	*routine(void *data)
 {
-	/* put everybody to think?
+	/* loop while nobody died
+	put everybody to think?
 	check if next and previous are not in hungry mode and enters hungry mode 
 		aka try to acquire forks
 	eat()
 	sleep()
 	think() */
+	while (!check_death)
+	{
+		//do routine6
+	}
 	return ;
 }
 

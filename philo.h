@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:31:18 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/28 10:14:38 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:22:24 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,13 @@ int		ft_atoi(char *str);
 time_t	get_time(void);
 void	print_action(t_attr *data, int flag);
 
-/* action.c */
+/* actions.c */
 void	assign_forks(t_attr *data);
 void	eat(t_attr *data);
 void	think(t_attr *data);
 void	sleep(t_attr *data);
+
+/* actions_utils.c */
+int		check_death(t_attr *data);
 
 #endif
