@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:43:00 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/27 09:04:59 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/28 10:05:09 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,24 +110,4 @@ int	create_threads(t_attr *data)
 	while (++i < data->n)
 		pthread_join(data->philos[i].tid, 0);
 	return (0);
-}
-
-void	assign_forks(t_attr *data)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->n)
-	{
-		if (i % 2)
-		{
-			data->philos[i].fork_1 = &data->forks[i];
-			data->philos[i].fork_2 = &data->forks[(i + 1) % data->n];
-		}
-		else
-		{
-			data->philos[i].fork_1 = &data->forks[(i + 1) % data->n];
-			data->philos[i].fork_2 = &data->forks[i];
-		}
-	}
 }

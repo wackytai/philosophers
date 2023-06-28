@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:31:18 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/27 09:07:35 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/28 10:14:38 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# define HUNGRY 0
+# define THINKING 1
+# define SLEEPING 2
 
 struct	s_attr;
 typedef struct s_philo
@@ -56,7 +60,6 @@ int		free_all(t_philo *philos, pthread_mutex_t *forks, t_attr *data);
 void	destroy_mutexes(t_attr *data);
 int		create_threads(t_attr *data);
 void	*routine(void *data);
-void	assign_forks(t_attr *data);
 void	routine_check(t_attr *data);
 
 /* philo_utils.c */
@@ -64,5 +67,11 @@ int		check_input(char **argv, int argc, t_attr *data);
 int		ft_atoi(char *str);
 time_t	get_time(void);
 void	print_action(t_attr *data, int flag);
+
+/* action.c */
+void	assign_forks(t_attr *data);
+void	eat(t_attr *data);
+void	think(t_attr *data);
+void	sleep(t_attr *data);
 
 #endif
