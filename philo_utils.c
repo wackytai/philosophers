@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/28 10:09:48 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:04:44 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,21 @@ time_t	get_time(void)
 	return (time.tv_sec * 1000 + (time.tv_usec / 1000));
 }
 
-void	print_action(t_attr *data, int flag)
+void	print_action(t_philo *philo, int flag)
 {
 	time_t	time;
 
+	pthread_mutex_lock(&philo->attr->write_m);
 	time = get_time();
-	pthread_mutex_lock(data->write_m);
 	if (flag == 0)
-		printf("%lu %i is eating\n", time, data->philos->n_philo);
+		printf("%lu %i is eating\n", time, philo->n_philo);
 	else if (flag == 1)
-		printf("%lu %i is thinking\n", time, data->philos->n_philo);
+		printf("%lu %i is thinking\n", time, philo->n_philo);
 	else if (flag == 2)
-		printf("%lu %i is sleeping\n", time, data->philos->n_philo);
+		printf("%lu %i is sleeping\n", time, philo->n_philo);
 	else if (flag == 3)
-		printf("%lu %i died\n", time, data->philos->n_philo);
-	pthread_mutex_unlock(data->write_m);
+		printf("%lu %i died\n", time, philo->n_philo);
+	else if (flag == -1)
+		printf("%lu %i has taken a fork\n", time, philo->n_philo);
+	pthread_mutex_unlock(&philo->attr->write_m);
 }

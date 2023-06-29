@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:43:00 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/28 10:05:09 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:02:19 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	fill_philo(t_attr *data)
 	int	i;
 
 	i = -1;
-	if (pthread_mutex_init(data->write_m, 0))
+	if (pthread_mutex_init(&data->write_m, 0))
 		return (1);
-	if (pthread_mutex_init(data->flag_m, 0))
+	if (pthread_mutex_init(&data->flag_m, 0))
 		return (1);
 	data->flag = 0;
 	while (++i < data->n)
@@ -82,13 +82,13 @@ void	destroy_mutexes(t_attr *data)
 		if (&data->forks[i])
 			pthread_mutex_destroy(&data->forks[i]);
 		if (data->philos[i].n_meal_m)
-			pthread_mutex_destroy(&data->philos[i].n_meal_m);
+			pthread_mutex_destroy(data->philos[i].n_meal_m);
 		if (data->philos[i].last_meal_m)
-			pthread_mutex_destroy(&data->philos[i].last_meal_m);
+			pthread_mutex_destroy(data->philos[i].last_meal_m);
 	}
-	if (data->flag_m)
+	if (&data->flag_m)
 		pthread_mutex_destroy(&data->flag_m);
-	if (data->write_m)
+	if (&data->write_m)
 		pthread_mutex_destroy(&data->write_m);
 }
 
@@ -110,4 +110,10 @@ int	create_threads(t_attr *data)
 	while (++i < data->n)
 		pthread_join(data->philos[i].tid, 0);
 	return (0);
+}
+
+void	routine_check(t_attr *data)
+{
+	(void)data;
+	printf("routine check\n");
 }

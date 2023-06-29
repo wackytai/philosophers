@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/28 11:28:52 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:13:32 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,51 +32,60 @@ void	assign_forks(t_attr *data)
 	}
 }
 
-void	*routine(void *data)
+void	*routine(void *philos)
 {
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
 	/* loop while nobody died
 	put everybody to think?
-	check if next and previous are not in hungry mode and enters hungry mode 
-		aka try to acquire forks
+	try to acquire forks
 	eat()
 	sleep()
 	think() */
-	while (!check_death)
+	while (!check_death(philo->attr))
 	{
-		//do routine6
+		think(philo);
+		eat(philo);
+		ft_sleep(philo);
 	}
-	return ;
+	return (0);
 }
 
-void	eat(t_attr *data)
+void	eat(t_philo *philo)
 {
 	int	time;
 
-	time = data->t_eat * 1000;
-	/* get forks
-	pthread_mutex_lock(data->philos[data->philos->n_philo - 1].fork_1)
-	pthread_mutex_lock(data->philos[data->philos->n_philo - 1].fork_2) */
-	print_action(data, 0);
+	time = philo->attr->t_eat * 1000;
+	pthread_mutex_lock(philo->fork_1);
+	print_action(philo, -1);
+	pthread_mutex_lock(philo->fork_2);
+	print_action(philo, -1);
+	pthread_mutex_lock(philo->last_meal_m);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(philo->last_meal_m);
+	print_action(philo, 0);
 	usleep(time);
-	/* put forks down
-	pthread_mutex_unlock(data->philos[data->philos->n_philo - 1].fork_2)
-	pthread_mutex_unlock(data->philos[data->philos->n_philo - 1].fork_1) */
-	data->philos[data->philos->n_philo - 1].last_meal = get_time();
+	pthread_mutex_lock(philo->n_meal_m);
+	philo->meal += 1;
+	pthread_mutex_unlock(philo->n_meal_m);
+	pthread_mutex_unlock(philo->fork_2);
+	pthread_mutex_unlock(philo->fork_1);
 	return ;
 }
 
-void	think(t_attr *data)
+void	think(t_philo *philo)
 {
-	print_action(data, 1);
+	print_action(philo, 1);
 	return ;
 }
 
-void	sleep(t_attr *data)
+void	ft_sleep(t_philo *philo)
 {
 	int	time;
 
-	time = data->t_sleep * 1000;
-	print_action(data, 2);
+	time = philo->attr->t_sleep * 1000;
+	print_action(philo, 2);
 	usleep(time);
 	return ;
 }
