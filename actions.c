@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/29 14:13:32 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:48:15 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,55 +37,55 @@ void	*routine(void *philos)
 	t_philo	*philo;
 
 	philo = (t_philo *)philos;
-	/* loop while nobody died
-	put everybody to think?
-	try to acquire forks
-	eat()
-	sleep()
-	think() */
-	while (!check_death(philo->attr))
+	sync_time(philo->attr);
+	if (philo->attr->n == 1)
+		one_philosopher(philo);
+	if (philo->n_philo % 2)
+		usleep(200000);
+	while (!check_flag(philo->attr))
 	{
-		think(philo);
 		eat(philo);
-		ft_sleep(philo);
+		print_action(philo, "is thinking", 0);
 	}
 	return (0);
 }
 
 void	eat(t_philo *philo)
 {
-	int	time;
-
-	time = philo->attr->t_eat * 1000;
 	pthread_mutex_lock(philo->fork_1);
-	print_action(philo, -1);
+	print_action(philo, "has taken a fork", 0);
 	pthread_mutex_lock(philo->fork_2);
-	print_action(philo, -1);
-	pthread_mutex_lock(philo->last_meal_m);
+	print_action(philo, "has taken a fork", 0);
+	pthread_mutex_lock(&philo->last_meal_m);
 	philo->last_meal = get_time();
-	pthread_mutex_unlock(philo->last_meal_m);
-	print_action(philo, 0);
-	usleep(time);
-	pthread_mutex_lock(philo->n_meal_m);
-	philo->meal += 1;
-	pthread_mutex_unlock(philo->n_meal_m);
-	pthread_mutex_unlock(philo->fork_2);
+	pthread_mutex_unlock(&philo->last_meal_m);
+	print_action(philo, "is eating", 0);
+	usleep(philo->attr->t_eat);
 	pthread_mutex_unlock(philo->fork_1);
+	pthread_mutex_unlock(philo->fork_2);
+	pthread_mutex_lock(&philo->n_meal_m);
+	philo->meal += 1;
+	pthread_mutex_unlock(&philo->n_meal_m);
+	print_action(philo, "is sleeping", 0);
+	usleep(philo->attr->t_sleep);
 	return ;
 }
 
 void	think(t_philo *philo)
 {
-	print_action(philo, 1);
-	return ;
-}
+	time_t	t_think;
 
-void	ft_sleep(t_philo *philo)
-{
-	int	time;
-
-	time = philo->attr->t_sleep * 1000;
-	print_action(philo, 2);
-	usleep(time);
+	pthread_mutex_lock(&philo->last_meal_m);
+	t_think = (philo->attr->t_die - (get_time() - philo->last_meal)
+			- philo->attr->t_eat) / 2;
+	pthread_mutex_unlock(&philo->last_meal_m);
+	if (t_think < 0)
+		t_think = 0;
+	if (t_think == 0)
+		t_think = 1;
+	if (t_think > 600)
+		t_think = 200;
+	print_action(philo, "is thinking", 0);
+	usleep(t_think);
 	return ;
 }

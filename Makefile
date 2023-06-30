@@ -3,12 +3,12 @@ LIB = philo.h
 C_SOURCES = philo.c philo_utils.c actions.c actions_utils.c
 B_SOURCES = 
 CC = @cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -lpthread
 
 all:	$(NAME)
 $(NAME):	$(C_SOURCES)
-			@$(CC) $(CFLAGS) $(^) -o $(NAME) -fsanitize=address 
-#-fsanitize=thread
+			$(CC) $(CFLAGS) $(^) -o $(@)
+#-fsanitize=address -fsanitize=thread
 
 bonus: $(B_SOURCES)
 			@$(CC) $(CFLAGS) $(^) -o $(NAME) -fsanitize=address

@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/29 15:04:44 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:23:22 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_input(char **argv, int argc, t_attr *data)
 	int	res;
 
 	i = 0;
+	data->t_die2 = ft_atoi(argv[2]);
 	while (++i < argc)
 	{
 		res = ft_atoi(argv[i]);
@@ -26,11 +27,11 @@ int	check_input(char **argv, int argc, t_attr *data)
 		else if (i == 1)
 			data->n = res;
 		else if (i == 2)
-			data->t_die = (time_t)res;
+			data->t_die = (time_t)res * 1000;
 		else if (i == 3)
-			data->t_eat = (time_t)res;
+			data->t_eat = (time_t)res * 1000;
 		else if (i == 4)
-			data->t_sleep = (time_t)res;
+			data->t_sleep = (time_t)res * 1000;
 		else if (i == 5)
 			data->max_meal = res;
 	}
@@ -70,21 +71,24 @@ time_t	get_time(void)
 	return (time.tv_sec * 1000 + (time.tv_usec / 1000));
 }
 
-void	print_action(t_philo *philo, int flag)
+void	sync_time(t_attr *data)
 {
 	time_t	time;
 
+	time = data->t_start - get_time();
+	if (time > 0)
+		usleep(time * 1000);
+	return ;
+}
+
+void	print_action(t_philo *philo, char *str, int end)
+{
+	time_t	time;
+
+	if (check_flag(philo->attr) && !end)
+		return ;
 	pthread_mutex_lock(&philo->attr->write_m);
-	time = get_time();
-	if (flag == 0)
-		printf("%lu %i is eating\n", time, philo->n_philo);
-	else if (flag == 1)
-		printf("%lu %i is thinking\n", time, philo->n_philo);
-	else if (flag == 2)
-		printf("%lu %i is sleeping\n", time, philo->n_philo);
-	else if (flag == 3)
-		printf("%lu %i died\n", time, philo->n_philo);
-	else if (flag == -1)
-		printf("%lu %i has taken a fork\n", time, philo->n_philo);
+	time = get_time() - philo->attr->t_start;
+	printf("%lu %i %s\n", time, philo->n_philo, str);
 	pthread_mutex_unlock(&philo->attr->write_m);
 }
