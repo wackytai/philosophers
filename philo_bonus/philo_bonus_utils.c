@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:04:27 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 13:34:13 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:56:04 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,27 @@ int	ft_atoi(char *str)
 		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	if (res < INT_MIN || res > INT_MAX)
 		return (-1);
 	return (res);
+}
+
+time_t	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, 0);
+	return (time.tv_sec * 1000 + (time.tv_usec / 1000));
+}
+
+time_t	sync_time(t_data *data)
+{
+	time_t	time;
+
+	time = data->t_start - get_time();
+	if (time > 0)
+		usleep(time * 1000);
+	return ;
 }

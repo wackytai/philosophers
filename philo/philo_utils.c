@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 13:47:31 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:14:44 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	ft_atoi(char *str)
 		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	if (res > INT_MAX || res < INT_MIN)
 		return (-1);
 	return (res);

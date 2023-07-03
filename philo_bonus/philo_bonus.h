@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:53 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 13:28:41 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:01:57 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,18 @@ typedef struct s_data
 }	t_data;
 
 /* philo_bonus.c */
-int	main(int argc, char **argv);
+int		main(int argc, char **argv);
+int		fill_philo(t_data *data);
+void	init_pid(t_data *data);
 
 /* philo_bonus_utils.c */
-int	check_input(int argc, char **argv, t_data *data);
+int		check_input(int argc, char **argv, t_data *data);
+int		ft_atoi(char *str);
+time_t	get_time(void);
+time_t	sync_time(t_data *data);
+
+/* philo_bonus_finish.c */
+void	close_semaphores(t_data *data);
+void	free_all(t_data *data);
 
 #endif
