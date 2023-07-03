@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/30 17:23:22 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:47:31 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_input(char **argv, int argc, t_attr *data)
 	int	res;
 
 	i = 0;
-	data->t_die2 = ft_atoi(argv[2]);
+	data->t_die[1] = ft_atoi(argv[2]);
 	while (++i < argc)
 	{
 		res = ft_atoi(argv[i]);
@@ -27,7 +27,7 @@ int	check_input(char **argv, int argc, t_attr *data)
 		else if (i == 1)
 			data->n = res;
 		else if (i == 2)
-			data->t_die = (time_t)res * 1000;
+			data->t_die[0] = (time_t)res * 1000;
 		else if (i == 3)
 			data->t_eat = (time_t)res * 1000;
 		else if (i == 4)
@@ -87,8 +87,8 @@ void	print_action(t_philo *philo, char *str, int end)
 
 	if (check_flag(philo->attr) && !end)
 		return ;
-	pthread_mutex_lock(&philo->attr->write_m);
 	time = get_time() - philo->attr->t_start;
+	pthread_mutex_lock(&philo->attr->write_m);
 	printf("%lu %i %s\n", time, philo->n_philo, str);
 	pthread_mutex_unlock(&philo->attr->write_m);
 }

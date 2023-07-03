@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/30 16:48:15 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:12:42 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	think(t_philo *philo)
 	time_t	t_think;
 
 	pthread_mutex_lock(&philo->last_meal_m);
-	t_think = (philo->attr->t_die - (get_time() - philo->last_meal)
+	t_think = (philo->attr->t_die[0] - (get_time() - philo->last_meal)
 			- philo->attr->t_eat) / 2;
 	pthread_mutex_unlock(&philo->last_meal_m);
 	if (t_think < 0)

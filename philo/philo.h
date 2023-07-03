@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:31:18 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/06/30 17:22:36 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:10:12 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ typedef struct s_attr
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_m;
 	time_t			t_start;
-	time_t			t_die;
-	time_t			t_die2;
+	time_t			t_die[2];
 	time_t			t_eat;
 	time_t			t_sleep;
 	int				max_meal;
