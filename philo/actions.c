@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 11:12:42 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:23:06 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	eat(t_philo *philo)
 	return ;
 }
 
-void	think(t_philo *philo)
+/* void	think(t_philo *philo)
 {
 	time_t	t_think;
 
@@ -88,4 +88,4 @@ void	think(t_philo *philo)
 	print_action(philo, "is thinking", 0);
 	usleep(t_think);
 	return ;
-}
+} */

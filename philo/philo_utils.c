@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 14:14:44 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:26:27 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	check_input(char **argv, int argc, t_attr *data)
 	int	res;
 
 	i = 0;
-	data->t_die[1] = ft_atoi(argv[2]);
 	while (++i < argc)
 	{
 		res = ft_atoi(argv[i]);
@@ -27,7 +26,7 @@ int	check_input(char **argv, int argc, t_attr *data)
 		else if (i == 1)
 			data->n = res;
 		else if (i == 2)
-			data->t_die[0] = (time_t)res * 1000;
+			data->t_die = (time_t)res;
 		else if (i == 3)
 			data->t_eat = (time_t)res * 1000;
 		else if (i == 4)

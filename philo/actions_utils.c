@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:21:20 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 11:13:02 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:26:59 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->last_meal_m);
-	if ((get_time() - philo->last_meal) >= philo->attr->t_die[1])
+	if ((get_time() - philo->last_meal) >= philo->attr->t_die)
 	{
 		pthread_mutex_lock(&philo->attr->flag_m);
 		philo->attr->flag = 1;
@@ -32,7 +32,7 @@ void	one_philosopher(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork_1);
 	print_action(philo, "has taken a fork", 0);
-	usleep(philo->attr->t_die[0]);
+	usleep(philo->attr->t_die * 1000);
 	print_action(philo, "died", 1);
 	pthread_mutex_unlock(philo->fork_1);
 	exit(0);
