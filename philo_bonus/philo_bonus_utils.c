@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:04:27 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 14:56:04 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 11:26:16 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	check_input(int argc, char **argv, t_data *data)
 	}
 	if (argc == 5)
 		data->max_meal = 0;
-	data->t_die2 = data->t_die2 / 1000;
 	return (0);
 }
 
@@ -81,4 +80,16 @@ time_t	sync_time(t_data *data)
 	if (time > 0)
 		usleep(time * 1000);
 	return ;
+}
+
+void	print_action(t_philo *philo, char *str, int end)
+{
+	time_t	time;
+
+	if (!end)
+		return ;
+	time = get_time() - philo->data->t_start;
+	sem_wait(philo->data->write_s);
+	printf("%lu %i %s\n", time, philo->n_philo, str);
+	sem_post(philo->data->write_s);
 }

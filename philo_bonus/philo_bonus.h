@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:53 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 15:01:57 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 11:54:34 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ typedef struct s_philo
 {
 	int				n_philo;
 	int				meal;
+	int				status;
 	time_t			last_meal;
-	pthread_t		id;
+	pthread_t		tid;
 	struct s_data	*data;
 }	t_philo;
 
@@ -45,9 +46,9 @@ typedef struct s_data
 	pid_t	*pid;
 	sem_t	*forks;
 	sem_t	*write_s;
+	sem_t	*last_meal_s;
 	time_t	t_start;
 	time_t	t_die;
-	time_t	t_die2;
 	time_t	t_eat;
 	time_t	t_sleep;
 	t_philo	*philo;
@@ -55,16 +56,21 @@ typedef struct s_data
 
 /* philo_bonus.c */
 int		main(int argc, char **argv);
-int		fill_philo(t_data *data);
-void	init_pid(t_data *data);
+int		create_philos(t_data *data);
+void	handle_philo(t_philo *philo);
+void	*routine(void *philo);
+void	routine_check(t_philo *philo);
 
 /* philo_bonus_utils.c */
 int		check_input(int argc, char **argv, t_data *data);
 int		ft_atoi(char *str);
 time_t	get_time(void);
 time_t	sync_time(t_data *data);
+void	print_action(t_philo *philo, char *str, int end);
 
 /* philo_bonus_finish.c */
+int		init_sem(t_data *data);
+void	init_pid(t_data *data);
 void	close_semaphores(t_data *data);
 void	free_all(t_data *data);
 

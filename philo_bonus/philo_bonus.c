@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:22 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/03 15:09:04 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:37:04 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,62 @@ int	main(int argc, char **argv)
 		free(data.philo);
 		exit(printf("Error allocating forks\n"));
 	}
-	if (fill_philo(&data))
+	if (create_philos(&data))
 		free_all(&data);
 	return (0);
 }
 
 
-int	fill_philo(t_data *data)
+int	create_philos(t_data *data)
 {
 	int	i;
 
 	i = -1;
+	if (init_sem(data))
+		return (1);
+	init_pid(data);
 	while (++i < data->n)
 	{
-		data->philo[i].data = data;
-		data->philo[i].n_philo = i + 1;
+		data->pid[i] = fork();
+		if (data->pid[i] < 0)
+			return (printf("Error forking\n"));
+		if (!data->pid[i])
+		{
+			data->philo[i].tid = -1;
+			data->philo[i].meal = 0;
+			data->philo[i].data = data;
+			data->philo[i].n_philo = i + 1;
+			data->philo[i].last_meal = data->t_start;
+			handle_philo(&data->philo[i]);
+		}
+	}
+	if (waitpid(-1, 1, 0))
+		kill(0, 1);
+}
+
+void	handle_philo(t_philo *philo)
+{
+	philo->status = 0;
+	if (pthread_create(philo->tid, 0, routine, philo))
+	{
+		close_semaphores(philo->data);
+		free_all(philo->data);
+		exit (3);
+	}
+	if (philo->data->n > 1)
+	{
+		routine_check(philo);
+		pthread_detach(philo->tid);
+		exit(philo->status);
 	}
 }
 
-void	init_pid(t_data *data)
+void	*routine(void *philo)
 {
-	int	i;
+	
+}
 
-	i = -1;
-	data->pid = (pid_t *)malloc(sizeof(pid_t) * data->n);
-	if (!data->pid)
-	{
-		close_semaphores(data);
-		free_all(data);
-		exit(printf("Error allocating pids\n"));
-	}
-	while (++i < data->n)
-		data->pid[i] = -1;
+void	routine_check(t_philo *philo)
+{
+	
 }
