@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:53 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 11:54:34 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:38:29 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,12 @@ typedef struct s_data
 int		main(int argc, char **argv);
 int		create_philos(t_data *data);
 void	handle_philo(t_philo *philo);
-void	*routine(void *philo);
+void	*routine(void *philos);
 void	routine_check(t_philo *philo);
+
+/* philo_bonus_actions.c */
+int		one_philosopher(t_philo *philo);
+void	eat(t_philo *philo);
 
 /* philo_bonus_utils.c */
 int		check_input(int argc, char **argv, t_data *data);

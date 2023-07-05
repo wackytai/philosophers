@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:04:27 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 11:26:16 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:57:17 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_input(int argc, char **argv, t_data *data)
 	int	res;
 
 	i = 0;
+	data->flag = 0;
 	while (++i < argc)
 	{
 		res = ft_atoi(argv[i]);

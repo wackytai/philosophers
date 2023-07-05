@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:22 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 13:37:04 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:38:10 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,52 @@ void	handle_philo(t_philo *philo)
 	}
 }
 
-void	*routine(void *philo)
+void	*routine(void *philos)
 {
-	
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
+	sync_time(philo->data);
+	if (philo->data->n == 1)
+		one_philosopher(philo);
+	if (philo->n_philo % 2)
+		usleep(200000);
+	while (!philo->data->flag)
+	{
+		eat(philo);
+		print_action(philo, "is thinking", 0);
+	}
+	return (0);
 }
 
 void	routine_check(t_philo *philo)
 {
-	
+	int	count;
+
+	while (1)
+	{
+		count = 1;
+		sem_wait(philo->data->last_meal_s);
+		if (get_time() - philo->last_meal >= philo->data->t_die)
+		{
+			philo->data->flag = 1;
+			print_action(philo, "died", 1);
+			sem_post(philo->data->last_meal_s);
+			philo->status = 1;
+			exit (philo->status);
+		}
+		sem_post(philo->data->last_meal_s);
+		if (philo->data->max_meal)
+		{
+			if (philo->meal < philo->data->max_meal)
+				count = 0;
+			else if (count)
+			{
+				philo->status = 0;
+				philo->data->flag = 1;
+				exit (philo->status);
+			}
+		}
+		usleep(1000);
+	}
 }
