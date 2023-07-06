@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:34:44 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 15:01:13 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 09:15:07 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	one_philosopher(t_philo *philo)
 	usleep(philo->data->t_eat);
 	sem_post(philo->data->forks);
 	print_action(philo, "died", 1);
-	philo->status = 1;
-	exit(philo->status);
+	exit(1);
 }
 
 void	eat(t_philo *philo)

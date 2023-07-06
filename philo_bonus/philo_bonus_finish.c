@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:00:40 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 15:38:25 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 09:15:20 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int	init_sem(t_data *data)
 {
-	if (sem_open(&data->write_s, 1))
-		return (1);
-	if (sem_open(&data->forks, data->n))
-		return (1);
-	if (sem_open(&data->last_meal_s, 1))
+	sem_unlink("forks");
+	sem_unlink("write");
+	sem_unlink("last_meal");
+	data->forks = sem_open("forks", O_CREAT, 0644, data->n);
+	data->write_s = sem_open("write", O_CREAT, 0644, 1);
+	data->last_meal_s = sem_open("last_meal", O_CREAT, 0644, 1);
+	if (data->forks == SEM_FAILED || data->write_s == SEM_FAILED
+		|| data->last_meal_s == SEM_FAILED)
 		return (1);
 	return (0);
 }
@@ -41,26 +44,44 @@ void	init_pid(t_data *data)
 
 void	close_semaphores(t_data *data)
 {
-	int	i;
+/* 	int	i;
 
 	i = -1;
-	while (++i < data->n)
-		sem_close(&data->forks[i]);
+	while (++i < data->n) */
+	sem_close(data->forks);
 	sem_close(data->write_s);
+	sem_close(data->last_meal_s);
 }
 
 void	free_all(t_data *data)
 {
-	int	i;
-
-	i = -1;
-	while (++i < data->n)
-		sem_unlink(&data->forks[i]);
-	sem_unlink(data->write_s);
+	sem_unlink("write");
+	sem_unlink("last_meal");
 	if (data->forks)
+	{
 		free(data->forks);
+		sem_unlink("forks");
+	}
 	if (data->philo)
 		free(data->philo);
 	if (data->pid)
 		free(data->pid);
+}
+
+void	finish_processes(t_data *data)
+{
+	int	i;
+	int	status;
+
+	i = -1;
+	while (++i < data->n)
+	{
+		waitpid(-1, &status, 0);
+		if (status != 0)
+		{
+			kill(-1, SIGTERM);
+			break ;
+		}
+	}
+	return ;
 }

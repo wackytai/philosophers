@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:04:27 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 14:57:17 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 08:28:47 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ time_t	get_time(void)
 	return (time.tv_sec * 1000 + (time.tv_usec / 1000));
 }
 
-time_t	sync_time(t_data *data)
+void	sync_time(t_data *data)
 {
 	time_t	time;
 

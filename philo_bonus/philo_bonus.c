@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:22 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 15:39:35 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 09:14:36 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		printf("Usage: ./philo n_philos t_die t_eat t_sleep\n");
 		exit (1);
 	}
-	data.philo = (t_data *)malloc(sizeof(t_data) * data.n);
+	data.philo = (t_philo *)malloc(sizeof(t_philo) * data.n);
 	if (!data.philo)
 		exit(printf("Error allocating philosophers\n"));
 	data.forks = (sem_t *)malloc(sizeof(sem_t) * data.n);
@@ -54,29 +54,31 @@ int	create_philos(t_data *data)
 			data->philo[i].meal = 0;
 			data->philo[i].data = data;
 			data->philo[i].n_philo = i + 1;
-			data->philo[i].last_meal = data->t_start;
 			handle_philo(&data->philo[i]);
 		}
 	}
-	if (waitpid(-1, 1, 0))
-		kill(0, 1);
+	finish_processes(data);
+	return (0);
 }
 
-void	handle_philo(t_philo *philo)
+int	handle_philo(t_philo *philo)
 {
-	philo->status = 0;
-	if (pthread_create(philo->tid, 0, routine, philo))
+	philo->data->t_start = get_time() + (philo->data->n * 2);
+	philo->last_meal = philo->data->t_start;
+	if (pthread_create(&philo->tid, 0, routine, philo))
 	{
 		close_semaphores(philo->data);
 		free_all(philo->data);
-		exit (3);
+		return (1);
 	}
 	if (philo->data->n > 1)
 	{
 		routine_check(philo);
 		pthread_detach(philo->tid);
-		exit(philo->status);
+		return (0);
 	}
+	pthread_join(philo->tid, 0);
+	return (0);
 }
 
 void	*routine(void *philos)
@@ -110,8 +112,7 @@ void	routine_check(t_philo *philo)
 			philo->data->flag = 1;
 			print_action(philo, "died", 1);
 			sem_post(philo->data->last_meal_s);
-			philo->status = 1;
-			exit (philo->status);
+			exit (1);
 		}
 		sem_post(philo->data->last_meal_s);
 		if (philo->data->max_meal)
@@ -120,9 +121,8 @@ void	routine_check(t_philo *philo)
 				count = 0;
 			else if (count)
 			{
-				philo->status = 0;
 				philo->data->flag = 1;
-				exit (philo->status);
+				exit (0);
 			}
 		}
 		usleep(1000);
