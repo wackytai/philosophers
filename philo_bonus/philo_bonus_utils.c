@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:04:27 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 08:28:47 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:01:50 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	check_input(int argc, char **argv, t_data *data)
 	int	res;
 
 	i = 0;
-	data->flag = 0;
 	while (++i < argc)
 	{
 		res = ft_atoi(argv[i]);
@@ -27,7 +26,7 @@ int	check_input(int argc, char **argv, t_data *data)
 		if (i == 1)
 			data->n = res;
 		else if (i == 2)
-			data->t_die = res * 1000;
+			data->t_die = res;
 		else if (i == 3)
 			data->t_eat = res * 1000;
 		else if (i == 4)
@@ -35,6 +34,7 @@ int	check_input(int argc, char **argv, t_data *data)
 		else if (i == 5)
 			data->max_meal = res;
 	}
+	data->t_die2 = data->t_die * 1000;
 	if (argc == 5)
 		data->max_meal = 0;
 	return (0);
@@ -83,12 +83,10 @@ void	sync_time(t_data *data)
 	return ;
 }
 
-void	print_action(t_philo *philo, char *str, int end)
+void	print_action(t_philo *philo, char *str)
 {
 	time_t	time;
 
-	if (!end)
-		return ;
 	time = get_time() - philo->data->t_start;
 	sem_wait(philo->data->write_s);
 	printf("%lu %i %s\n", time, philo->n_philo, str);

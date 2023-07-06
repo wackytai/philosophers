@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:00:40 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 09:15:20 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:36:49 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ void	init_pid(t_data *data)
 
 void	close_semaphores(t_data *data)
 {
-/* 	int	i;
-
-	i = -1;
-	while (++i < data->n) */
 	sem_close(data->forks);
 	sem_close(data->write_s);
 	sem_close(data->last_meal_s);
@@ -71,6 +67,7 @@ void	free_all(t_data *data)
 void	finish_processes(t_data *data)
 {
 	int	i;
+	int	j;
 	int	status;
 
 	i = -1;
@@ -79,7 +76,9 @@ void	finish_processes(t_data *data)
 		waitpid(-1, &status, 0);
 		if (status != 0)
 		{
-			kill(-1, SIGTERM);
+			j = -1;
+			while (++j < data->n)
+				kill(data->pid[j], SIGTERM);
 			break ;
 		}
 	}

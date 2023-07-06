@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:13:32 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/04 13:26:27 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:12:16 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	print_action(t_philo *philo, char *str, int end)
 {
 	time_t	time;
 
-	if (check_flag(philo->attr) && !end)
+	if (!end && check_flag(philo->attr))
 		return ;
 	time = get_time() - philo->attr->t_start;
 	pthread_mutex_lock(&philo->attr->write_m);
