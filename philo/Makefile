@@ -2,7 +2,7 @@ NAME = philo
 LIB = philo.h
 C_SOURCES = philo.c philo_utils.c actions.c actions_utils.c
 CC = @cc
-CFLAGS = -Wall -Wextra -Werror -g -lpthread -O3
+CFLAGS = -Wall -Wextra -Werror -g -lpthread
 
 all:	$(NAME)
 $(NAME):	$(C_SOURCES)
