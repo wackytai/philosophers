@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/05 09:49:46 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/08/06 14:44:30 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ void	*routine(void *philos)
 	if (philo->attr->n == 1)
 		one_philosopher(philo);
 	if (philo->n_philo % 2)
-		usleep(200000);
+		think(philo);
 	while (!check_flag(philo->attr))
 	{
 		eat(philo);
-		print_action(philo, "is thinking", 0);
+		think(philo);
+		//print_action(philo, "is thinking", 0);
 	}
 	return (0);
 }
@@ -69,4 +70,23 @@ void	eat(t_philo *philo)
 	print_action(philo, "is sleeping", 0);
 	usleep(philo->attr->t_sleep);
 	return ;
+}
+
+void	think(t_philo *philo)
+{
+	time_t	time_to_think;
+
+	pthread_mutex_lock(&philo->last_meal_m);
+	time_to_think = (philo->attr->t_die
+			- (get_time() - philo->last_meal)
+			- philo->attr->t_eat) / 2;
+	pthread_mutex_unlock(&philo->last_meal_m);
+	if (time_to_think < 0)
+		time_to_think = 0;
+	if (time_to_think == 0)
+		time_to_think = 1;
+	if (time_to_think > 600)
+		time_to_think = 200;
+	print_action(philo, "is thinking", 0);
+	usleep(time_to_think * 1000);
 }

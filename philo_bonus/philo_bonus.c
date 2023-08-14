@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:22 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 12:07:17 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:21:53 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char **argv)
 	if (!data.philo)
 		exit(printf("Error allocating philosophers\n"));
 	init_philos(&data);
-	if (create_philos(&data))
-		free_all(&data);
+	create_philos(&data);
+	free_all(&data);
 	return (0);
 }
 

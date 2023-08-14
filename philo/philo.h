@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:31:18 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/04 13:26:12 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/08/06 14:41:27 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int		fill_philo(t_attr *data);
 int		free_all(t_philo *philos, pthread_mutex_t *forks, t_attr *data);
 void	destroy_mutexes(t_attr *data);
 int		create_threads(t_attr *data);
-void	*routine(void *philos);
 
 /* philo_utils.c */
 int		check_input(char **argv, int argc, t_attr *data);
@@ -68,6 +67,7 @@ void	print_action(t_philo *philo, char *str, int end);
 void	assign_forks(t_attr *data);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
+void	*routine(void *philos);
 
 /* actions_utils.c */
 int		check_death(t_philo *philo);

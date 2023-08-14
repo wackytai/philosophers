@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:00:40 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 10:36:49 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:19:44 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ void	free_all(t_data *data)
 {
 	sem_unlink("write");
 	sem_unlink("last_meal");
-	if (data->forks)
-	{
-		free(data->forks);
-		sem_unlink("forks");
-	}
+	sem_unlink("forks");
 	if (data->philo)
 		free(data->philo);
 	if (data->pid)
