@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:34:44 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 12:06:46 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:15:02 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void	think(t_philo *philo)
 			- (get_time() - philo->last_meal)
 			- philo->data->t_eat) / 2;
 	sem_post(philo->data->last_meal_s);
-	if (time_to_think < 0)
-		time_to_think = 0;
-	if (time_to_think == 0)
+	if (time_to_think < 1)
 		time_to_think = 1;
 	if (time_to_think > 600)
 		time_to_think = 200;

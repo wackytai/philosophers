@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:43:53 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/07/06 12:07:27 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:04:05 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <sys/stat.h>
 # include <sys/wait.h>
 # include <semaphore.h>
 # include <sys/types.h>

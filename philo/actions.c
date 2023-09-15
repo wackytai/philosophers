@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:04:39 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/08/06 14:44:30 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:11:56 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	*routine(void *philos)
 	{
 		eat(philo);
 		think(philo);
-		//print_action(philo, "is thinking", 0);
 	}
 	return (0);
 }
@@ -81,9 +80,7 @@ void	think(t_philo *philo)
 			- (get_time() - philo->last_meal)
 			- philo->attr->t_eat) / 2;
 	pthread_mutex_unlock(&philo->last_meal_m);
-	if (time_to_think < 0)
-		time_to_think = 0;
-	if (time_to_think == 0)
+	if (time_to_think < 1)
 		time_to_think = 1;
 	if (time_to_think > 600)
 		time_to_think = 200;
